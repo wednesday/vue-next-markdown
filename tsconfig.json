@@ -1,0 +1,16 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "lib": ["dom", "es6"],
+        "experimentalDecorators": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "sourceMap": true
+    },
+    "include": ["node/**/*.ts", "src/**/*.vue", "src/**/*.ts"],
+    "exclude": ["webpack.*"]
+}
