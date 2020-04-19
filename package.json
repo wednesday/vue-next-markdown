@@ -9,7 +9,7 @@
         "watch": "npx tsc ./node/**/*.ts --watch",
         "server": "node ./node/main.js"
     },
-    "author": "as",
+    "author": "wednesday",
     "license": "ISC",
     "dependencies": {
         "@types/cors": "^2.8.6",
