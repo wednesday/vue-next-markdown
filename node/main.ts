@@ -2,6 +2,7 @@ import * as chalk from 'chalk';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as express from 'express';
+import * as compression from 'compression';
 import * as cors from 'cors';
 import * as unified from 'unified';
 import * as markdown from 'remark-parse';
@@ -27,6 +28,9 @@ app.use(cors());
 
 // statics
 app.use(express.static(path.resolve('./dist/')));
+
+// gzip
+app.use(compression());
 
 app.get('/articles/:name', (req, res) => {
     const targetPath = path.resolve(`./articles/${req.params.name}.md`);

@@ -14,7 +14,6 @@ module.exports = {
         browser: true,
         node: true,
     },
-    ignorePatterns: ['webpack.*', 'node_modules/'],
     parserOptions: {
         ecmaVersion: 2019,
         sourceType: 'module',
