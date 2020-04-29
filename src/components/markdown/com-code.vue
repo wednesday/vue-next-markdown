@@ -24,7 +24,7 @@ export default defineComponent({
     props: {
         data: Object,
     },
-    setup(props) {
+    setup(props: PropsData) {
         const codeBlock = ref(null);
         const languageClass = computed(() => `language-${props.data?.lang}`);
         onMounted(() => {

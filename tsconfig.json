@@ -11,6 +11,6 @@
         "strictNullChecks": true,
         "sourceMap": true
     },
-    "include": ["node/**/*.ts", "src/**/*.vue", "src/**/*.ts"],
+    "include": ["./node/**/*.ts", "./src/**/*.vue", "./src/**/*.ts", "src/paintworklet.js"],
     "exclude": ["webpack.*"]
 }

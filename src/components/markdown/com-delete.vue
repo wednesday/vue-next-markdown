@@ -13,8 +13,6 @@ export default defineComponent({
         data: Object,
     },
     render(props: PropsData) {
-        console.log(`[del]`, props);
-
         return h(
             'del',
             {

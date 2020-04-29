@@ -6,7 +6,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = (env = {}) => ({
     mode: env.prod ? 'production' : 'development',
     devtool: env.prod ? 'source-map' : 'cheap-module-eval-source-map',
-    entry: path.resolve(__dirname, './src/main.ts'),
+    entry: {
+        main: path.resolve(__dirname, './src/main.ts'),
+        paintworklet: './src/paintworklet.ts',
+    },
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/',
@@ -20,7 +23,7 @@ module.exports = (env = {}) => ({
             vue: '@vue/runtime-dom',
             '@assets': path.resolve('./src/assets/'),
         },
-        extensions: ['.js', '.vue', '.json', '.css', '.ts', '.tsx'],
+        extensions: ['.js', '.vue', '.json', '.css', 'less', '.ts', '.tsx'],
     },
     module: {
         rules: [
@@ -56,6 +59,17 @@ module.exports = (env = {}) => ({
                         options: { hmr: !env.prod },
                     },
                     'css-loader',
+                ],
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: { hmr: !env.prod },
+                    },
+                    'css-loader',
+                    'less-loader',
                 ],
             },
         ],

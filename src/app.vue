@@ -1,57 +1,46 @@
 <template>
-    <div class="as-md-main">
-        <component
-            :is="`com-${para.type}`"
-            v-for="(para, index) in contents.data.children"
-            :data="para"
-            :key="index"
-        ></component>
+    <div class="main-wrap" ref="content">
+        <side></side>
+        <div class="content-wrap">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
-import { ref, reactive, onMounted, defineComponent } from 'vue';
-import axios from 'axios';
+import { defineComponent } from 'vue';
+import side from './components/side/index.vue';
 
-interface ArticleData {
-    success: number;
-    data: Array<any>;
-    error?: string;
-}
 export default defineComponent({
     setup() {
-        const count = ref(0);
-        const contents: ArticleData = reactive({ success: 0, data: [] });
-        const inc = (): void => {
-            count.value++;
-        };
-        const getArticles = (): void => {
-            axios.get('http://localhost:3000/articles/first-note').then(res => {
-                const _data = res.data;
-                if (_data && _data.success) {
-                    contents.success = _data.success;
-                    contents.data = _data.data;
-                }
-            });
-        };
+        return {};
+    },
+    components: { side },
+    mounted() {
+        if ('paintWorklet' in CSS) {
+            CSS.paintWorklet.addModule('/paintworklet.js');
 
-        onMounted(() => {
-            getArticles();
-        });
-        return {
-            count,
-            inc,
-            contents,
-        };
+            const wave: HTMLBaseElement = this.$refs['content'] as HTMLBaseElement;
+            let tick = 0;
+            requestAnimationFrame(function raf() {
+                tick += 1;
+                wave.style.cssText = `--animation-tick: ${tick};`;
+                requestAnimationFrame(raf);
+            });
+        }
     },
 });
 </script>
 
-<style scoped>
-img {
-    width: 200px;
+<style lang="less">
+.main-wrap {
+    min-height: 100vh;
+    background-color: #ffcfdf;
+    background-image: paint(wave);
 }
-h1 {
-    font-family: Arial, Helvetica, sans-serif;
+.content-wrap {
+    width: calc(100vw - 400px);
+    padding-left: 300px;
+    padding-right: 100px;
 }
 </style>

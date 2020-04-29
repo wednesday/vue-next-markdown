@@ -32,7 +32,7 @@ app.use(express.static(path.resolve('./dist/')));
 // gzip
 app.use(compression());
 
-app.get('/articles/:name', (req, res) => {
+app.get('/api/articles/:name', (req, res) => {
     const targetPath = path.resolve(`./articles/${req.params.name}.md`);
     let targetMD = '';
     let mdData: ArticlesDataRes;
@@ -48,7 +48,7 @@ app.get('/articles/:name', (req, res) => {
     }
 });
 
-app.get('/articles-html/:name', async (req, res) => {
+app.get('/api/articles-html/:name', async (req, res) => {
     const targetPath = path.resolve(`./articles/${req.params.name}.md`);
     let targetMD = '';
     let mdData: ArticlesDataHTMLRes;
@@ -66,7 +66,7 @@ app.get('/articles-html/:name', async (req, res) => {
     }
 });
 
-app.get('/', (res, req) => {
+app.get('/*', (res, req) => {
     req.send(fs.readFileSync(path.resolve('./dist/index.html'), 'utf-8'));
 });
 

@@ -40,6 +40,7 @@ var chalk = require("chalk");
 var path = require("path");
 var fs = require("fs");
 var express = require("express");
+var compression = require("compression");
 var cors = require("cors");
 var unified = require("unified");
 var markdown = require("remark-parse");
@@ -50,7 +51,9 @@ var mdH = unified().use(markdown).use(html);
 app.use(cors());
 // statics
 app.use(express.static(path.resolve('./dist/')));
-app.get('/articles/:name', function (req, res) {
+// gzip
+app.use(compression());
+app.get('/api/articles/:name', function (req, res) {
     var targetPath = path.resolve("./articles/" + req.params.name + ".md");
     var targetMD = '';
     var mdData;
@@ -66,7 +69,7 @@ app.get('/articles/:name', function (req, res) {
         res.json(mdData);
     }
 });
-app.get('/articles-html/:name', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/api/articles-html/:name', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var targetPath, targetMD, mdData;
     return __generator(this, function (_a) {
         targetPath = path.resolve("./articles/" + req.params.name + ".md");
@@ -87,7 +90,7 @@ app.get('/articles-html/:name', function (req, res) { return __awaiter(void 0, v
         return [2 /*return*/];
     });
 }); });
-app.get('/', function (res, req) {
+app.get('/*', function (res, req) {
     req.send(fs.readFileSync(path.resolve('./dist/index.html'), 'utf-8'));
 });
 app.listen(3000);
